@@ -1,4 +1,4 @@
-#include<iostream>
+ï»¿#include<iostream>
 #include<array>
 #include<vector>
 #include<list>
@@ -27,9 +27,9 @@ void main()
 	setlocale(LC_ALL, "");
 	cout << "Hello STL" << endl;
 #ifdef STL_ARRAY
-	//array-ýòî õðàíèò äàííûå ââèäå ñòàòè÷åñêîãî ìàññèâà.
-	//Ïðè ñîçäàíèè 'array', êðîìå òèïà õðàíèìûõ çíà÷åíèé, òàê æå îþÿçàòåëüíî íóæíî óêàçàòü 
-	//êîëè÷åñòâî õðàíèìûõ çíà÷åíèé
+	//array-ÑÑ‚Ð¾ Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ Ð´Ð°Ð½Ð½Ñ‹Ðµ Ð²Ð²Ð¸Ð´Ðµ ÑÑ‚Ð°Ñ‚Ð¸Ñ‡ÐµÑÐºÐ¾Ð³Ð¾ Ð¼Ð°ÑÑÐ¸Ð²Ð°.
+	//ÐŸÑ€Ð¸ ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ð¸ 'array', ÐºÑ€Ð¾Ð¼Ðµ Ñ‚Ð¸Ð¿Ð° Ñ…Ñ€Ð°Ð½Ð¸Ð¼Ñ‹Ñ… Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ð¹, Ñ‚Ð°Ðº Ð¶Ðµ Ð¾ÑŽÑÐ·Ð°Ñ‚ÐµÐ»ÑŒÐ½Ð¾ Ð½ÑƒÐ¶Ð½Ð¾ ÑƒÐºÐ°Ð·Ð°Ñ‚ÑŒ 
+	//ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ñ…Ñ€Ð°Ð½Ð¸Ð¼Ñ‹Ñ… Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ð¹
 	const int N = 5;
 	std::array<int, N> arr = { 3,5,8,13,21};
 	for (int i = 0; i < arr.size(); i++)
@@ -40,8 +40,8 @@ void main()
 #endif // STL_ARRAY
 
 #ifdef STL_VECTOR
-	//vector-ýòî êîíòåéíåð, êîòîðûé õðàíèò äàííûå ââèäå äèíàìè÷åñêîãî ìàññèâà.
-	//Ïðè ñîçäàíèè âåêòîðà îáÿçàòåëüíî çàäàþò òîëüêî òèï õðàíèìûõ ýëåìåíòîâ 
+	//vector-ÑÑ‚Ð¾ ÐºÐ¾Ð½Ñ‚ÐµÐ¹Ð½ÐµÑ€, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ð¹ Ñ…Ñ€Ð°Ð½Ð¸Ñ‚ Ð´Ð°Ð½Ð½Ñ‹Ðµ Ð²Ð²Ð¸Ð´Ðµ Ð´Ð¸Ð½Ð°Ð¼Ð¸Ñ‡ÐµÑÐºÐ¾Ð³Ð¾ Ð¼Ð°ÑÑÐ¸Ð²Ð°.
+	//ÐŸÑ€Ð¸ ÑÐ¾Ð·Ð´Ð°Ð½Ð¸Ð¸ Ð²ÐµÐºÑ‚Ð¾Ñ€Ð° Ð¾Ð±ÑÐ·Ð°Ñ‚ÐµÐ»ÑŒÐ½Ð¾ Ð·Ð°Ð´Ð°ÑŽÑ‚ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ñ‚Ð¸Ð¿ Ñ…Ñ€Ð°Ð½Ð¸Ð¼Ñ‹Ñ… ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð¾Ð² 
 	std::vector<int> vec = { 0,1,1,2,3,5,8,13,21,34 };
 	for (int i = 0; i < vec.size(); i++)
 	{
@@ -68,8 +68,8 @@ void main()
 	vector_info(vec);
 	int index;
 	int value;
-	cout << "ââåäèòå ïîçèöèþ äîáàâëÿåìîãî ýëåìåíòà: "; cin >> index;
-	cout << "ââåäèòå çíà÷åíèå äîáàâëÿåìîãî ýëåìåíòà: "; cin >> value;
+	cout << "Ð²Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸ÑŽ Ð´Ð¾Ð±Ð°Ð²Ð»ÑÐµÐ¼Ð¾Ð³Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð°: "; cin >> index;
+	cout << "Ð²Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ Ð´Ð¾Ð±Ð°Ð²Ð»ÑÐµÐ¼Ð¾Ð³Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð°: "; cin >> value;
 	std::vector<int>::iterator position_insert = vec.begin();
 	std::advance(position_insert, index);
 	vec.insert(position_insert, value);
@@ -78,7 +78,7 @@ void main()
 		cout << vec.at(i) << tab;
 	}
 	cout << endl;
-	cout << "ââåäèòå ïîçèöèþ óäàëÿåìîãî ýëåìåíòà: "; cin >> index;
+	cout << "Ð²Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸ÑŽ ÑƒÐ´Ð°Ð»ÑÐµÐ¼Ð¾Ð³Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð°: "; cin >> index;
 	std::vector<int>::iterator position_erase = vec.begin() ;
 	advance(position_erase, index);
 	vec.erase(position_erase);
@@ -95,15 +95,15 @@ void main()
 		i++)cout << *i << tab;cout << endl;
 	int index;
 	int value;
-	cout << "ââåäèòå ïîçèöèþ äîáàâëÿåìîãî ýëåìåíòà: "; cin >> index;
-	cout << "ââåäèòå çíà÷åíèå äîáàâëÿåìîãî ýëåìåíòà: "; cin >> value;
+	cout << "Ð²Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸ÑŽ Ð´Ð¾Ð±Ð°Ð²Ð»ÑÐµÐ¼Ð¾Ð³Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð°: "; cin >> index;
+	cout << "Ð²Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ Ð´Ð¾Ð±Ð°Ð²Ð»ÑÐµÐ¼Ð¾Ð³Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð°: "; cin >> value;
 	std::list<int>::iterator position_insert = list.begin();
 	std::advance(position_insert, index);
 	list.insert(position_insert, value);
 	for (std::list<int>::iterator i = list.begin();
 		i != list.end();
 		i++)cout << *i << tab; cout << endl;
-	cout << "ââåäèòå ïîçèöèþ óäàëÿåìîãî ýëåìåíòà: "; cin >> index;
+	cout << "Ð²Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸ÑŽ ÑƒÐ´Ð°Ð»ÑÐµÐ¼Ð¾Ð³Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð°: "; cin >> index;
 	std::list<int>:: iterator position_erase = list.begin();
 	advance(position_erase, index);
 	list.erase(position_erase);
