@@ -12,7 +12,7 @@ using std::endl;
 #define delimiter "\n------------------------------------------\n"
 
 //#define STL_ARRAY
-#define STL_VECTOR
+//#define STL_VECTOR
 //#define STL_LIST
 
 template<typename T> void vector_info(const std::vector<T>& vec)
