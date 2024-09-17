@@ -95,7 +95,10 @@ void main()
 		i++)cout << *i << tab;cout << endl;
 	int index;
 	int value;
-	cout << "введите позицию добавляемого элемента: "; cin >> index;
+	do {
+		cout << "введите позицию добавляемого элемента: "; cin >> index;
+	
+	} while (index >= list.size());
 	cout << "введите значение добавляемого элемента: "; cin >> value;
 	std::list<int>::iterator position_insert = list.begin();
 	std::advance(position_insert, index);
