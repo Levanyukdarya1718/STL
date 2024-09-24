@@ -1,5 +1,6 @@
-#define _CRT_SECURE_NO_WARNINGS
+п»ї#define _CRT_SECURE_NO_WARNINGS
 #pragma warning (disable: 4326)
+#include<Windows.h>
 #include<iostream>
 #include<fstream>
 #include<string>
@@ -14,56 +15,66 @@ using std::cout;
 using std::endl;
 
 #define tab "\t"
-#define delimiter "\t-------------------------------\n"
+#define delimiter "\n---------------------------------------------------------------------------\n"
 
-#define UP_ARROW	72
-#define DOWN_ARROW	80
 #define Enter		13
 #define Escape		27
-const char* MENU_ITEMS[] =
+#define UP_ARROW	72
+#define DOWN_ARROW	80
+
+//const char* MENU_ITEMS[] =
+//{
+//	"1. Р—Р°РіСЂСѓР·РёС‚СЊ Р±Р°Р·Сѓ РёР· С„Р°Р№Р»Р°",
+//	"2. РЎРѕС…СЂР°РЅРёС‚СЊ Р±Р°Р·Сѓ РІ С„Р°Р№Р»",
+//	"3. Р’С‹РІРµСЃС‚Рё Р±Р°Р·Сѓ РЅР° СЌРєСЂР°РЅ",
+//	"4. Р’С‹РІРµСЃС‚Рё РёРЅС„РѕСЂРјР°С†РёСЋ РїРѕ РЅРѕРјРµСЂСѓ",
+//	"5. Р”РѕР±Р°РІРёС‚СЊ РЅР°СЂСѓС€РµРЅРёРµ",
+//};
+//
+//const int MENU_SIZE = sizeof(MENU_ITEMS) / sizeof(MENU_ITEMS[0]);
+
+const std::map<int, std::string>MENU_ITEMS =
 {
-	"1. Загрузить базу из файла",
-	"2. Сохранить базу в файл",
-	"3. Вывести базу на экран",
-	"4. Вывести информацию по номеру",
-	"5. Добавить нарушение"
+	{1, "РЎРѕС…СЂР°РЅРёС‚СЊ Р±Р°Р·Сѓ РІ С„Р°Р№Р»"},
+	{2, "Р—Р°РіСЂСѓР·РёС‚СЊ Р±Р°Р·Сѓ РёР· С„Р°Р№Р»Р°"},
+	{3, "Р’С‹РІРµСЃС‚Рё Р±Р°Р·Сѓ РЅР° СЌРєСЂР°РЅ"},
+	{4, "Р”РѕР±Р°РІРёС‚СЊ РЅР°СЂСѓС€РµРЅРёРµ"},
+	{5, "Р’С‹РІРµСЃС‚Рё РёРЅС„РѕСЂРјР°С†РёСЋ РїРѕ РЅРѕРјРµСЂСѓ"},
 };
-const int MENU_SIZE = sizeof(MENU_ITEMS) / sizeof(MENU_ITEMS[0]);
-
-
 
 const std::map<int, std::string> VIOLATIONS =
 {
-	{1, "Ремень безопасности"},
-	{2, "Парковка в неположенном месте"},
-	{3, "Пересечение сплошной линии"},
-	{4, "Превышение скорости"},
-	{5, "Отсутспвие водительского удостоверения"},
-	{6, "Отсутствие права управления автомобилем"},
-	{7, "Отсутствие страховки"},
-	{8, "Проезд на красный"},
-	{9, "Проезд на красный"},
-	{10, "Дрифт на перекрестке"},
-	{11, "Езда в нетрезвом состоянии"},
-	{12, "Оскорбление офицера"},
-	{13, "Внесение изменений в конструкцию автомобиля"},
-	{14, "Перевозка негабаритного груза"},
-	{15, "Превышение максимальной нагрузки на ось"},
-	{16, "Перевозка ребенка без кресла"},
+	{0, "N/A"},
+	{1, "Р РµРјРµРЅСЊ Р±РµР·РѕРїР°СЃРЅРѕСЃС‚Рё"},
+	{2, "РџР°СЂРєРѕРІРєР° РІ РЅРµРїРѕР»РѕР¶РµРЅРЅРѕРј РјРµСЃС‚Рµ"},
+	{3, "РџРµСЂРµСЃРµС‡РµРЅРёРµ СЃРїР»РѕС€РЅРѕР№"},
+	{4, "РџСЂРµРІС‹С€РµРЅРёРµ СЃРєРѕСЂРѕСЃС‚Рё"},
+	{5, "РћС‚СЃСѓС‚СЃС‚РІРёРµ РІРѕРґРёС‚РµР»СЊСЃРєРѕРіРѕ СѓРґРѕСЃС‚РѕРІРµСЂРµРЅРёСЏ"},
+	{6, "РћС‚СЃСѓС‚СЃС‚РІРёРµ РїСЂР°РІР° СѓРїСЂР°РІР»РµРЅРёСЏ Р°РІС‚РѕРјРѕР±РёР»РµРј"},
+	{7, "РћС‚СЃСѓС‚СЃС‚РІРёРµ СЃС‚СЂР°С…РѕРІРєРё"},
+	{8, "РџСЂРѕРµР·Рґ РЅР° РєСЂР°СЃРЅС‹Р№"},
+	{9, "Р’С‹РµР·Рґ РЅР° РІСЃС‚СЂРµС‡РЅСѓСЋ РїРѕР»РѕСЃСѓ"},
+	{10, "Р”СЂРёС„С‚ РЅР° РїРµСЂРµРєСЂРµСЃС‚РєРµ"},
+	{11, "Р•Р·РґР° РІ РЅРµС‚СЂРµР·РІРѕРј СЃРѕСЃС‚РѕСЏРЅРёРё"},
+	{12, "РћСЃРєРѕСЂР±Р»РµРЅРёРµ РѕС„РёС†РµСЂР°"},
+	{13, "Р’РЅРµСЃРµРЅРёРµ РёР·РјРµРЅРµРЅРёР№ РІ РєРѕРЅСЃС‚СЂСѓРєС†РёСЋ Р°РІС‚РѕРјРѕР±РёР»СЏ"},
+	{14, "РџРµСЂРµРІРѕР·РєР° РЅРµРіР°Р±Р°СЂРёС‚РЅРѕРіРѕ РіСЂСѓР·Р°"},
+	{15, "РџСЂРµРІС‹С€РµРЅРёРµ РјР°РєСЃРёРјР°Р»СЊРЅРѕР№ РЅР°РіСЂСѓР·РєРё РЅР° РѕСЃСЊ"},
+	{16, "РџРµСЂРµРІРѕР·РєР° СЂРµР±РµРЅРєР° Р±РµР· РєСЂРµСЃР»Р°"}
 };
 
 class Crime
 {
-	//std::string licence_plate;
+	//std::string license_plate;
 	int id;
 	std::string place;
 	tm time;
 public:
-	/*const std::string& get_licence_plate()const
+	/*const std::string& get_license_plate()const
 	{
-		return licence_plate;
+		return license_plate;
 	}*/
-	int  get_violation_id()const
+	int get_violation_id()const
 	{
 		return id;
 	}
@@ -77,25 +88,23 @@ public:
 	}
 	const std::string get_time()const
 	{
+		/*std::string result = asctime(&time);
+		result.pop_back();
+		return result;*/
 		const int SIZE = 256;
 		char formatted[SIZE]{};
 		strftime(formatted, SIZE, "%R %e.%m.%Y", &time);
 		return formatted;
-
 	}
 	const time_t get_timestamp()const
 	{
 		tm copy = time;
 		return mktime(&copy);
 	}
-	
-	/*const std::string& get_place()const
+
+	/*void set_license_plate(const std::string& licence_plate)
 	{
-		return place;
-	}*/
-	/*void set_licence_plate(const std::string& licence_plate)
-	{
-		this->licence_plate = licence_plate;
+		this->license_plate = licence_plate;
 	}*/
 	void set_violation_id(int id)
 	{
@@ -106,43 +115,43 @@ public:
 		this->place = place;
 	}
 	void set_time(const std::string& time)
-	{//1) создаем временную строку чтобы пропарсить полученную строку:
+	{
+		//1) Г‘Г®Г§Г¤Г ГҐГ¬ ГўГ°ГҐГ¬ГҐГ­Г­ГіГѕ Г±ГІГ°Г®ГЄГі Г¤Г«Гї ГІГ®ГЈГ® Г·ГІГ®ГЎГ» ГЇГ°Г®ГЇГ Г°Г±ГЁГІГј ГЇГ®Г«ГіГ·ГҐГ­Г­ГіГѕ Г±ГІГ°Г®ГЄГі:
 		char* time_buffer = new char[time.size() + 1] {};
-		//2)копируем полученную строку в буффер
+		//2) ГЉГ®ГЇГЁГ°ГіГҐГ¬ ГЇГ®Г«ГіГ·ГҐГ­Г­ГіГѕ Г±ГІГ°Г®ГЄГі Гў ГЎГіГґГҐГ°:
 		strcpy(time_buffer, time.c_str());
-		//Функция strcpy(dst, src); копирует содержимое строки
-		//источника(src-Source) в строку получателя (dst- Destination)
+		//Г”ГіГ­ГЄГ¶ГЁГї strcpy(dst, src);	ГЄГ®ГЇГЁГ°ГіГҐГІ Г±Г®Г¤ГҐГ°Г¦ГЁГ¬Г®ГҐ Г±ГІГ°Г®ГЄГЁ ГЁГ±ГІГ®Г·Г­ГЁГЄГ  (src - Source) Гў Г±ГІГ°Г®ГЄГі ГЇГ®Г«ГіГ·Г ГІГҐГ«Гї (dst - Destination);
 
-		//3) создаем массив для хранения элементов времени
+		//3) Г‘Г®Г§Г¤Г ГҐГ¬ Г¬Г Г±Г±ГЁГў Г¤Г«Гї ГµГ°Г Г­ГҐГ­ГЁГї ГЅГ«ГҐГ¬ГҐГ­ГІГ®Гў ГўГ°ГҐГ¬ГҐГ­ГЁ:
 		int time_elements[5]{};
-		int   i = 0;
-		char delimiters[] = ": . /";
+		int i = 0;
+		char delimiters[] = ":./ ";
 		for (char* pch = strtok(time_buffer, delimiters); pch; pch = strtok(NULL, delimiters))
 			time_elements[i++] = std::atoi(pch);
-			//Функция std::atoi()'ASCII-string to int' преобразует строку в целое число.
+		//Г”ГіГ­ГЄГ¶ГЁГї std::atoi() 'ASCII-string to int' ГЇГ°ГҐГ®ГЎГ°Г Г§ГіГҐГІ Г±ГІГ°Г®ГЄГі Гў Г¶ГҐГ«Г®ГҐ Г·ГЁГ±Г«Г®.
+		delete[] time_buffer;
 
+		//4) Г‘Г®ГµГ°Г Г­ГїГҐГ¬ ГЅГ«ГҐГ¬ГҐГ­ГІГ» ГўГ°ГҐГ¬ГҐГ­ГЁ Гў Г±ГІГ°ГіГЄГІГіГ°Гі 'tm':
 
-
-		delete[]time_buffer;
-		//this->time=time;
-		//4) Сохраняем элементы времени в струкстуру'mtm':
 		this->time.tm_hour = time_elements[0];
 		this->time.tm_min = time_elements[1];
 		this->time.tm_mday = time_elements[2];
 		this->time.tm_mon = time_elements[3];
-		this->time.tm_year = time_elements[4]-1900;
+		this->time.tm_year = time_elements[4] - 1900;
 
+		//this->time = time;
 	}
 	void set_timestamp(time_t timestamp)
 	{
-		time = *localtime( &timestamp);
+		time = *localtime(&timestamp);
 	}
+
 	//					Constructors:
-	Crime(
-		
-		int violation_id,
-		const std::string& place,
-		const std::string& time
+	explicit Crime	//ГЃГ Г§ 'explicit' ГўГ»Г¤Г ГҐГІ Г®ГёГЁГЎГЄГі Гў 'ofstream operator'
+	(
+		int violation_id = 0,
+		const std::string& place = "Place",
+		const std::string& time = "00:00 01.01.2000"
 	)
 	{
 		this->time = {};
@@ -150,7 +159,6 @@ public:
 		this->set_place(place);
 		this->set_time(time);
 #ifdef DEBUG
-
 		cout << "Constructor:\t" << this << endl;
 #endif // DEBUG
 	}
@@ -159,20 +167,17 @@ public:
 #ifdef DEBUG
 		cout << "Destructor:\t" << this << endl;
 #endif // DEBUG
-
 	}
-
 };
 
 std::ostream& operator<<(std::ostream& os, const Crime& obj)
 {
-	return os << obj.get_time() << ":\t" << obj.get_violation() <<  "-" << obj.get_place();
-
+	return os << obj.get_time() << ":\t" << obj.get_place() << " - " << obj.get_violation();
 }
 std::ofstream& operator<<(std::ofstream& os, const Crime& obj)
 {
-	 os << obj.get_violation_id() << " " << obj.get_timestamp() << " " << obj.get_place();
-	 return os;
+	os << obj.get_violation_id() << " " << obj.get_timestamp() << " " << obj.get_place();
+	return os;
 }
 std::istream& operator>>(std::istream& is, Crime& obj)
 {
@@ -186,67 +191,87 @@ std::istream& operator>>(std::istream& is, Crime& obj)
 	obj.set_timestamp(timestamp);
 	obj.set_place(place);
 	return is;
-
 }
-void print(const std::map<std::string, std::list<Crime>>& base);
-void save(const std::map<std::string, std::list<Crime>>& base, const std::string filename);
-std::map < std::string, std::list<Crime>> load(const std::string& filename);
+
 int menu();
+void print(const std::map<std::string, std::list<Crime>>& base);
+void save(const std::map<std::string, std::list<Crime>>& base, const std::string& filename);
+std::map<std::string, std::list<Crime>> load(const std::string& filename);
+
 //#define SAVE_CHECK
-#define LOAD_CHECK
+//#define LOAD_CHECK
+
 void main()
 {
-	
-		setlocale(LC_ALL, "");
-		/*Crime crime(1, "ул.Ленина", "18:10 1.01.2024");
-		cout << crime << endl;*/
-#ifdef SAVE CHECK
+	setlocale(LC_ALL, "");
+	/*Crime crime(1, "СѓР». Р›РµРЅРёРЅР°", "18:10 1.09.2024");
+	cout << crime << endl;*/
 
+#ifdef SAVE_CHECK
+	std::map<std::string, std::list<Crime>> base =
+	{
+		{"a777bb", {Crime(1, "СѓР». Р›РµРЅРёРЅР°", "18:10 1.09.2024"), Crime(2,"РїР». РЎРІРѕР±РѕРґС‹", "12:25 20.08.2024")}},
+		{"a000bb", {Crime(6, "СѓР». РљРѕСЃРјРѕРЅР°РІС‚РѕРІ", "17:50 1.08.2024"), Crime(8,"СѓР». РљРѕСЃРјРѕРЅР°РІС‚РѕРІ", "17:45 01.08.2024")}},
+		{"a001Р°Р°", {Crime(10, "СѓР». РџСЂРѕР»РµС‚Р°СЂСЃРєР°СЏ", "21:50 1.08.2024"), Crime(9,"СѓР». РџСЂРѕР»РµС‚Р°СЂСЃРєР°СЏ", "21:50 1.08.2024"), Crime(11,"СѓР». РџСЂРѕР»РµС‚Р°СЂСЃРєР°СЏ", "21:50 1.08.2024"), Crime(12,"СѓР». РџСЂРѕР»РµС‚Р°СЂСЃРєР°СЏ", "22:05 1.08.2024")}}, };
+	print(base);
+	save(base, "base.txt");
+#endif // SAVE_CHECK
 
-
-		std::map<std::string, std::list<Crime>> base =
-		{
-			{"a777bb", {Crime(1, "ул. Ленина", "18:10 1.09.2024"), Crime(2, "пл. Свободы", "12:25 20.08.2024")}},
-			{"a000bb", {Crime(6, "ул. Космонавтов", "17:50 1.08.2024"), Crime(8, "ул. Космонавтов", "17:45  1.08.2024")}},
-			{"a001aa", {Crime(10, "ул. Пролетарская", "21:50 1.08.2024"), Crime(9, "ул. Пролетарская", "21:45  1.08.2024"), Crime(12, "ул. Пролетарская", "22:05  1.08.2024")}},
-		};
-		print(base);
-		save(base, "base.txt");
-#endif // SAVE CHECK
-		#ifdef LOAD_CHECK
+#ifdef LOAD_CHECK
 	std::map<std::string, std::list<Crime>> base = load("base.txt");
 	print(base);
 #endif // LOAD_CHECK
-	menu();
-}
 
+	std::map<std::string, std::list<Crime>> base = load("base.txt");
+	do
+	{
+		switch (menu())
+		{
+		case 0: return;
+		case 1: base = load("base.txt");	break;
+		case 2: save(base, "base.txt");		break;
+		case 3: print(base);				break;
+		case 4: cout << "РЎРєРѕСЂРѕ Р±СѓРґРµС‚" << endl; break;
+		case 5:  cout << "РЎРєРѕСЂРѕ Р±СѓРґРµС‚" << endl; break;
+		}
+	} while (true);
+}
 int menu()
 {
-	int selected_item = 0;
+	int selected_item = 1;
 	char key;
-	do {
+	do
+	{
 		system("CLS");
-		for (int i = 0;MENU_SIZE; i++)
+		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+		for (int i = 1; i <= MENU_ITEMS.size(); i++)
 		{
-			
 			cout << (i == selected_item ? "[" : " ");
+			cout << i << ". ";
 			cout.width(32);
-			cout << MENU_ITEMS[i];
-			cout << (i == selected_item ? "]" : " ");
+			cout << std::left;
+			if (i == selected_item)SetConsoleTextAttribute(hConsole, 0x70);
+			cout << MENU_ITEMS.at(i);
+			SetConsoleTextAttribute(hConsole, 0x07);
+			cout << (i == selected_item ? "  ]" : " ");
 			cout << endl;
 		}
 		key = _getch();
-		cout << (int)key << endl;
+		//cout << (int)key << endl;
 		switch (key)
 		{
-		case UP_ARROW:if (selected_item > 0)selected_item--; break;
-		case DOWN_ARROW:if (selected_item < MENU_SIZE - 1)selected_item++; break;
-		case Enter: return selected_item+1;
-		case Escape: return 0;
+		case UP_ARROW:	 /*if (selected_item > 1)*/selected_item--; break;
+		case DOWN_ARROW: /*if (selected_item < MENU_ITEMS.size())*/selected_item++; break;
+		case Enter:		 return selected_item;
+		case Escape:	 return 0;
 		}
-	} while (key!=Escape);
+		if (selected_item == MENU_ITEMS.size() + 1)selected_item = 1;
+		if (selected_item == 0)selected_item = MENU_ITEMS.size();
+	} while (key != Escape);
 	return 0;
 }
+
+
 void print(const std::map<std::string, std::list<Crime>>& base)
 {
 	cout << delimiter << endl;
@@ -255,15 +280,16 @@ void print(const std::map<std::string, std::list<Crime>>& base)
 		++map_it)
 	{
 		cout << map_it->first << ":\n";
-		for (std::list <Crime>::const_iterator it = map_it->second.begin(); it != map_it->second.end(); ++it)
+		for (std::list<Crime>::const_iterator it = map_it->second.begin(); it != map_it->second.end(); ++it)
 		{
 			cout << "\t" << *it << endl;
 		}
 		cout << delimiter << endl;
 	}
-	cout<<"Количество номеров в базе:" << base.size() << endl;
+	cout << "РљРѕР»РёС‡РµСЃС‚РІРѕ РЅРѕРјРµСЂРѕРІ РІ Р±Р°Р·Рµ:" << base.size() << endl;
+	system("PAUSE");
 }
-void save(const std::map<std::string, std::list<Crime>>& base, const std::string filename)
+void save(const std::map<std::string, std::list<Crime>>& base, const std::string& filename)
 {
 	std::ofstream fout(filename);
 	//fout << delimiter << endl;
@@ -272,12 +298,12 @@ void save(const std::map<std::string, std::list<Crime>>& base, const std::string
 		++map_it)
 	{
 		fout << map_it->first << ":\t";
-		for (std::list <Crime>::const_iterator it = map_it->second.begin(); it != map_it->second.end(); ++it)
+		for (std::list<Crime>::const_iterator it = map_it->second.begin(); it != map_it->second.end(); ++it)
 		{
 			fout << *it << ",";
 		}
-		//fout.seekp(-1, std::ios::cur);//Метод seekp(offset, direction) задает позицию курсора записи
-		//-1 смещение на один символ обратноб std::ios::cur-
+		//fout.seekp(-1, std::ios::cur);//РњРµС‚РѕРґ seekp(offset, direction) Р·Р°РґР°РµС‚ РїРѕР·РёС†РёСЋ РєСѓСЂСЃРѕСЂР° Р·Р°РїРёСЃРё
+		//-1 СЃРјРµС‰РµРЅРёРµ РЅР° РѕРґРёРЅ СЃРёРјРІРѕР» РѕР±СЂР°С‚РЅРѕР± std::ios::cur-
 
 		//fout << "\n";
 		fout << endl;
@@ -286,9 +312,9 @@ void save(const std::map<std::string, std::list<Crime>>& base, const std::string
 	std::string command = "notepad " + filename;
 	system(command.c_str());
 }
-std::map < std::string, std::list<Crime>> load(const std::string& filename)
+std::map<std::string, std::list<Crime>> load(const std::string& filename)
 {
-	std::map<std::string, std::list<Crime>>base;
+	std::map<std::string, std::list<Crime>> base;
 	std::ifstream fin(filename);
 	if (fin.is_open())
 	{
@@ -296,43 +322,41 @@ std::map < std::string, std::list<Crime>> load(const std::string& filename)
 		{
 			std::string licence_plate;
 			std::getline(fin, licence_plate, ':');
+			//if (licence_plate.empty())continue;
 			licence_plate.erase(0, licence_plate.find_first_not_of('\n'));
-			fin.ignore();
+			fin.ignore();	//:
+
 			std::string crimes;
 			std::getline(fin, crimes);
-			char* sz_buffer = new char[crimes.size() + 1]{}; 
+			char* sz_buffer = new char[crimes.size() + 1] {};
 			strcpy(sz_buffer, crimes.c_str());
-			
-			char delimeters[] = ",";
-			Crime crime;
-			for (char* pch = strtok(sz_buffer, delimeters); pch; pch = strtok(NULL, delimiters))
+			char delimiters[] = ",";
+			Crime crime;// (0, "place", "00:00 01.01.2000");
+			for (char* pch = strtok(sz_buffer, delimiters); pch; pch = strtok(NULL, delimiters))
 			{
 				std::cout << pch << "\t";
 				//std::string s_crime(pch);
-				 std::stringstream ss_crime(pch, std::ios_base::in | std::ios_base::out);
-				//std::stringstream ss_crime(s_crime, std::ios_base::out);
-				//Crime crime(0, "place", "00:00 01.01.2000");
+				std::stringstream ss_crime(pch, std::ios_base::in | std::ios_base::out);
+				//Crime crime(0, "place", "00:00 01.01.2000");	
+				//Crime crime; 
 				ss_crime >> crime;
 				base[licence_plate].push_back(crime);
 			}
 			cout << endl;
 			/*std::string licence_plate;
-			std::getline(fin, licence_plate);
-			char delimeters[]= ""*/
-			/*std::string licence_plate;
 			std::getline(fin, licence_plate, ':');
 			fin.ignore();
-			Crime crime(0, "place", " time");
+			Crime crime(0, "place", "time");
 			fin >> crime;
 			base[licence_plate].push_back(crime);*/
+
 			delete[] sz_buffer;
 		}
-		
 		fin.close();
 	}
 	else
 	{
-		std::cerr << "Error: file non found" << endl;
+		std::cerr << "Error: file not found" << endl;
 	}
 	return base;
 }
