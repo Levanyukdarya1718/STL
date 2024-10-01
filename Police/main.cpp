@@ -230,7 +230,7 @@ void main()
 		case 0: return;
 		case 1: base = load("base.txt");	break;
 		case 2: save(base, "base.txt");		break;
-		case 3: print(base);				break;
+		case 3: print(base);				break;  
 		case 4: cout << "Скоро будет" << endl; break;
 		case 5:  cout << "Скоро будет" << endl; break;
 		}
@@ -238,7 +238,7 @@ void main()
 }
 int menu()
 {
-	int selected_item = 1;
+	int selected_item = 1; 
 	char key;
 	do
 	{
